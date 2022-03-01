@@ -1,5 +1,3 @@
-from functools import lru_cache
-
 def A(n, a, b, c):
     if n == 0:
         return 1
@@ -21,4 +19,4 @@ ca = a * A(n - 1, a, b, c)
 cb = b * B(n - 1, a, b, c)
 cc = c * C(n - 1, a, b, c)
 
-print(ca + cb + cc)
+print((ca + cb + cc) % (10 ** 9 + 7))
