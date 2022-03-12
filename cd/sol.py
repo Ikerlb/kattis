@@ -2,7 +2,7 @@
 # so we might as well do a two
 # pointer solution
 def solve(jack, jill):
-    i = j = res = 0
+    j = res = 0
     for i in range(len(jack)): 
         while j < len(jill) and jill[j] < jack[i]:    
             j += 1
