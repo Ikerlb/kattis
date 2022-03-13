@@ -12,12 +12,10 @@ type UnionFind struct {
 	size []int
 }
 
-// New returns an initialized list of size
 func New(size int) *UnionFind {
 	return new(UnionFind).init(size)
 }
 
-// Constructor initializes root and size arrays
 func (uf *UnionFind) init(size int) *UnionFind {
 	uf = new(UnionFind)
 	uf.root = make([]int, size)
@@ -31,8 +29,6 @@ func (uf *UnionFind) init(size int) *UnionFind {
 	return uf
 }
 
-// Union connects p and q by finding their roots and comparing their respective
-// size arrays to keep the tree flat
 func (uf *UnionFind) Union(p int, q int) {
 	qRoot := uf.Root(q)
 	pRoot := uf.Root(p)
@@ -50,9 +46,6 @@ func (uf *UnionFind) Union(p int, q int) {
 	}
 }
 
-// Root or Find traverses each parent element while compressing the
-// levels to find the root element of p
-// If we attempt to access an element outside the array it returns -1
 func (uf *UnionFind) Root(p int) int {
 	if p > len(uf.root)-1 {
 		return -1

@@ -11,12 +11,10 @@ type UnionFind struct {
 	size []int
 }
 
-// New returns an initialized list of size
 func New(size int) *UnionFind {
 	return new(UnionFind).init(size)
 }
 
-// Constructor initializes root and size arrays
 func (uf *UnionFind) init(size int) *UnionFind {
 	uf = new(UnionFind)
 	uf.root = make([]int, size)
@@ -30,8 +28,6 @@ func (uf *UnionFind) init(size int) *UnionFind {
 	return uf
 }
 
-// Union connects p and q by finding their roots and comparing their respective
-// size arrays to keep the tree flat
 func (uf *UnionFind) Union(p int, q int) {
 	qRoot := uf.Root(q)
 	pRoot := uf.Root(p)
@@ -49,9 +45,6 @@ func (uf *UnionFind) Union(p int, q int) {
 	}
 }
 
-// Root or Find traverses each parent element while compressing the
-// levels to find the root element of p
-// If we attempt to access an element outside the array it returns -1
 func (uf *UnionFind) Root(p int) int {
 	if p > len(uf.root)-1 {
 		return -1
@@ -65,17 +58,55 @@ func (uf *UnionFind) Root(p int) int {
 	return p
 }
 
-// Root or Find
 func (uf *UnionFind) Find(p int) int {
 	return uf.Root(p)
 }
 
-// Check if items p,q are connected
 func (uf *UnionFind) Connected(p int, q int) bool {
 	return uf.Root(p) == uf.Root(q)
 }
 
+func max(a, b int) int {
+    if a > b {
+        return a
+    } else {
+        return b
+    }
+}
+
+func (uf *UnionFind) Size(p int) int {
+    rp := uf.Root(p)
+    return uf.size[rp]
+}
+
+func (uf *UnionFind) Decrement(p int) {
+    rp := uf.Root(p)
+    uf.size[rp] = max(uf.size[rp] - 1, 0)
+}
+
 func main() {
+    writer := bufio.NewWriter(os.Stdout)
+    defer writer.Flush()
+
     sc := bufio.NewScanner(os.Stdin)
-    
+    sc.Scan()
+
+    var items, drawers, a, b int
+    fmt.Sscanf(sc.Text(), "%d %d", &items, &drawers)
+
+    ufs := New(drawers)
+
+    for i := 0; i < items; i += 1 {
+        sc.Scan()
+        fmt.Sscanf(sc.Text(), "%d %d", &a, &b)
+        a -= 1
+        b -= 1
+        if ufs.Size(a) + ufs.Size(b) > 0 {
+            ufs.Union(a, b)
+            ufs.Decrement(a)
+            fmt.Fprintf(writer, "LADICA\n")
+        } else {
+            fmt.Fprintf(writer, "SMECE\n")
+        }
+    }
 }
