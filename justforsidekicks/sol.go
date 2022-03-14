@@ -39,6 +39,10 @@ func (ft Fenwick) Add(i, delta int) {
 
 func main() {
     sc := bufio.NewScanner(os.Stdin)
+    maxCapacity := 200200 //1 byte * 200 000
+    buf := make([]byte, maxCapacity)
+    sc.Buffer(buf, maxCapacity)
+
     sc.Scan()
 
     var n, q, op, fst, snd int

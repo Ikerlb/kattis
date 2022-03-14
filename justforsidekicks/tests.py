@@ -23,6 +23,6 @@ def generate_test_case(n, q):
             s.append(f"{op} {l} {r}")
     return "\n".join(s)
 
-res = generate_test_case(20000, 100000)
+res = generate_test_case(200000, 10)
 #print(res, file = sys.stderr)
 print(res)
