@@ -10,9 +10,9 @@ def sieve(upto):
             primes[j] = False
     return res
             
-def prime_factors(n):
+def prime_factors(n, res):
     i = 0    
-    res = [0 for _ in range(len(primes))]
+    #res = [0 for _ in range(len(primes))]
     while n != 1 and i < len(primes):
         while n % primes[i] == 0:
             n //= primes[i]
@@ -22,20 +22,19 @@ def prime_factors(n):
 
 primes = sieve(431)
 
-dp = [[0 for _ in range(len(primes))]]
+dp = [[0 for _ in range(len(primes))] for _ in range(432)]
 for i in range(1, 432):
-    cur = dp[-1][:]
-    for i, p in enumerate(prime_factors(i)):
-        cur[i] += p
-    dp.append(cur)
+    #for j, p in enumerate(prime_factors(i), ):
+    for j in range(len(prime_factors(i, dp[i]))):
+        dp[i][j] += dp[i - 1][j]
 
 for line in stdin:
     n, k = map(int, line[:-1].split(" "))
-    res = dp[n][:]
+    res = 1
     for i in range(len(primes)):
-        res[i] -= min(res[i], dp[n - k][i] + dp[k][i])
-    pres = 1
-    for p in res:
-        if p > 0:
-            pres *= p + 1
-    print(pres)
+        res *= (dp[n][i] - min(dp[n][i], dp[n - k][i] + dp[k][i])) + 1
+    #    res[i] -= min(res[i], dp[n - k][i] + dp[k][i])
+    #for p in res:
+    #    if p > 0:
+    #        pres *= p + 1
+    print(res)
