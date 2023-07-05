@@ -1,29 +1,28 @@
+use std::iter::FilterMap;
 use std::io::{self, BufRead};
-use io::Error;
 
-struct TicTacToe {
-    : [[]]
+fn parse_state(lines: &Vec<String>) -> Vec<Vec<char>> {
+    lines
+        .iter()
+        .map(|line| line.chars().collect())
+        .collect()
 }
 
-fn format_board() -> String {
+fn dfs(state: &Vec<Vec<char>>, x: usize, y: usize) -> usize {
     
 }
 
-fn main() -> Result<(), Error> {
-    let mut buffer = String::new();
+fn main() -> io::Result<()> {
     let stdin = io::stdin();
-    let mut handle = stdin.lock();
+    let mut lines = stdin
+        .lock()
+        .lines()
+        .filter_map(|line| line.ok());
 
-    handle.read_line(&mut buffer)?;
-    
-    match buffer.trim() {
-        "first" => {
-            println!("dayum");
-        },
-        _       => {
-            println!("dayumn't");
-        }
-    }
+    // burn 'first'
+    lines.next();
+
+        let tt = parse_state(&lines.take(3).collect());
 
     Ok(())
 }
