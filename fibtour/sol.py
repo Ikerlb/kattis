@@ -1,4 +1,5 @@
 from collections import defaultdict
+from itertools import chain
 
 fibos = [1, 1]
 
@@ -13,16 +14,7 @@ heights = [int(s) for s in input().split(" ")]
 
 g = defaultdict(list)
 
-def dfs(g, n, dp):
-    dp[n] = -1
-    res = 1
-    for nn in g[n]:
-        if nn not in dp:
-            res = max(res, 1 + dfs(g, nn, dp))
-        elif nn in dp and dp[nn] != -1:
-            res = max(res, 1 + dp[nn])
-    dp[n] = res
-    return res
+one_one = set()
 
 for _ in range(m):
     s, t = map(lambda x: int(x) - 1, input().split(" "))
@@ -37,25 +29,37 @@ for _ in range(m):
         continue
     if not ht in dfibos:
         continue
-    if ht == hs == 1:
-        g[s].append(t)
-        g[t].append(s)
+    if ht == hs == 1: 
+        one_one.add(t)
+        one_one.add(s)
     elif dfibos[ht] - dfibos[hs] == 1:
         g[s].append(t)
 
-if not g and any(h in dfibos for h in heights):
-    print(1)
-    exit()
-elif not g:
-    print(0)
-    exit()
+def toposort(g, n, used, indices):
+    used.add(n)
+    for nn in g[n]:
+        if nn not in used:
+            toposort(g, nn, used, indices)
+    indices.append(n) 
 
-dp = {}
-indices = sorted(range(len(heights)), key = lambda x: heights[x])
+indices = []
+used = set()
+for i in range(n):
+    if i not in used:
+        toposort(g, i, used, indices)
+indices.reverse()
 
+dist = defaultdict(int)
+for i in range(n):
+    if heights[i] == 1 and i in one_one:
+        dist[i] = 2
+    elif heights[i] in dfibos:
+        dist[i] = 1
 
+res = 0 
 for i in indices:
-    if heights[i] != 1:
-        dfs(g, i, dp)
+    res = max(res, dist[i])
+    for nn in g[i]:
+        dist[nn] = max(dist[nn], dist[i] + 1)
 
-print(max(dp.values()))
+print(res)
