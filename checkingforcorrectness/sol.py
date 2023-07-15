@@ -15,7 +15,7 @@ def _eval(a, op, b):
     if op == "*":
         return a * b
     if op == "^":
-        return pow(a, b, 10000)
+        return _pow(a, b, 10000)
 
 for line in stdin:
     a, op, b = line[:-1].split(" ")

@@ -16,4 +16,5 @@ for l in range(t):
         n = q.popleft()
         for nn in g[n]:
             q.append(nn)
+
 print(len(q))
