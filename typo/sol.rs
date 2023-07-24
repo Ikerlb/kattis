@@ -70,12 +70,14 @@ fn main() -> io::Result<()> {
 
     let mut res = Vec::new();
     for v in &lines[1..] {
+        //println!("started {:?}", v); 
         hashes(v, p)
             .iter()
             .any(|x| hs.contains(x))
             .then(|| {
                 res.push(v.iter().collect::<String>());
             });
+        //println!("ended {:?}", v); 
     }
     if res.len() > 0 {
         println!("{}", res.join("\n"));
