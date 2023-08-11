@@ -8,6 +8,8 @@ fn dfs(board: &mut Vec<Vec<char>>, r: usize, c: usize, target: char, k: usize) -
     let prev = board[r][c];
     board[r][c] = '.';
 
+     
+
     board[r][c] = prev;
     
 }
