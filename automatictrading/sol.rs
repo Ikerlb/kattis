@@ -177,15 +177,11 @@ fn main() -> io::Result<()> {
         .collect::<Vec<_>>();
 
     let sa = build_suffix_array(&s);
-    //println!("sa: {:?}", sa);
     let mut isa = vec![0; sa.len()];
     for i in 0..sa.len() {
         isa[sa[i]] = i;
     }
-    //println!("isa: {:?}", isa);
-    //println!("sa order:\n{}", format(&s, &sa));
     let lcpa = build_lcp_array(&s, &sa); 
-    //println!("lcpa: {:?}", lcpa);
     let st = SegmentTree::new(&lcpa);
 
 
@@ -203,7 +199,6 @@ fn main() -> io::Result<()> {
             swap(&mut li, &mut ri)
         }
 
-        //println!("li: {} ri: {}", li + 1, ri);
         let q = st.query(li + 1, ri); 
         println!("{}", q);
     }
