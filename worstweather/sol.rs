@@ -126,7 +126,7 @@ fn main() -> io::Result<()> {
 
             //println!("{} {}", x, y);
 
-			if (keys[0] >= x || keys[keys.len()-1] <= y) {
+            if (keys[0] >= x || keys[keys.len()-1] <= y) {
 				println!("maybe");
 				continue;
 			}
@@ -176,7 +176,7 @@ fn main() -> io::Result<()> {
                 continue;
             }
 
-			if keys[xp] == x && keys[yp] == y && (xp - yp) as isize == (x - y) {
+            if keys[xp] == x && keys[yp] == y && (xp - yp) as isize == (x - y) {
 				println!("true");
 			} else {
 				println!("maybe");
