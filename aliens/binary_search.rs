@@ -45,8 +45,8 @@ fn main() -> io::Result<()> {
             .map(|c| (c as i64 - 'a' as i64) + 1)
             .collect::<Vec<_>>();
         let base = 31;
-        let p = 972663749;
-        //let p = 614889782588491410;
+        //let p = 972663749;
+        let p = 614889782588491410;
         //let p = 1000000007;
         println!("{}", solve(&s, m, base, p));
     }
