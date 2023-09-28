@@ -142,7 +142,6 @@ fn main() -> io::Result<()> {
         if lcp[i] == mx {
             res = s[sa[i]..sa[i] + mx]
                 .iter()
-                .map(|&u| (u as u8) as char)
                 .collect::<String>();
             break;
         }
