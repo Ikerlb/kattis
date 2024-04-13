@@ -25,7 +25,6 @@ class UFS:
             s.add(self._root(i))
         return list(s)
 
-
 def solve(n, edges):
     ufs = UFS(n)
     spare = []

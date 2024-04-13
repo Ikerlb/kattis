@@ -50,7 +50,7 @@ fn build(s: &Vec<char>) -> Vec<usize> {
     let mut nra = vec![0isize; n];
     let mut cnt = 1;
 
-    while cnt < n {
+    while cnt <= n {
         //println!("start ra={:?}", ra);
 
         for i in 0..n {
@@ -66,7 +66,6 @@ fn build(s: &Vec<char>) -> Vec<usize> {
 
         l.sort();
 
-        nra[0] = 0;
         for i in 1..n {
             if l[i] == l[i - 1] {
                 nra[l[i].p] = nra[l[i - 1].p];
@@ -79,10 +78,19 @@ fn build(s: &Vec<char>) -> Vec<usize> {
         swap(&mut ra, &mut nra);
         cnt <<= 1;
     }
-    return l
-        .iter()
-        .map(|e| e.p)
-        .collect();
+    //return l
+    //    .iter()
+    //    .map(|e| e.p)
+    //    .collect();
+
+    // q: This should work as well, sould it not?
+    // a: It looks like does but there has to be at 
+    // least one iteration of the previous loop
+    let mut res = vec![0; n];
+    for (i, &r) in ra.iter().enumerate() {
+        res[r as usize] = i;
+    }
+    return res;
 }
 
 fn main() -> io::Result<()> {

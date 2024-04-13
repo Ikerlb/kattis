@@ -172,9 +172,6 @@ fn main() -> io::Result<()> {
         let sa = create_suffix_array(&s);
         for p in patterns {
             let mut v = find(&s, &sa, &p);
-            /*if p == "o " {
-                println!("ke verga {:?} {}", v, p);
-            }*/
             let sv = v
                 .drain(..)
                 .map(|i| i.to_string())

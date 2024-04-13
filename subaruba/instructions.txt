@@ -1,0 +1,21 @@
+as has been mentioned a few times in the past, Sara is rather odd. Sara and her best friend were both in Kubópavogur College. They conversed frequently, whether the subject was their studies, entertainment or their peers.
+
+Since certain topics were sensitive, Sara did not want the people around them to understand what was being discussed. Sara studied languages and was therefore quite adept at learning languages few people would understand. She could not use any language at all though. it had to be rare that another person at her school could understand conversations in that language. Thus, Sara decided common spoken languages should be avoided, for example icelandic, english, French or other languages that may be the native language of some people.
+
+Sara searched for an encryption method instead. Contemporary encryption methods were mostly based on number theory. Since she was not a math whiz she searched for other methods.
+
+Sara found the language game ubbi dubbi and decided to use it to encrypt her conversations. The game involved adding a ub in front of each vowel sound. Sara put a lot of effort into learning to speak icelandic in an encrypted manner and then took the time to teach her friend. Sara and her friend speak and understand the encrypted language fluently.
+
+Hannes is also a friend of Sara and sometimes she speaks the encrypted language to him. unfortunately, he has a harder time with the language. He understand the rules but needs a little more time to translate back and forth. Therefore, Hannes decides he needs a program to help him encrypt and decrypt his communication with Sara.
+
+Luckily, Hannes graduated as a computer scientist and knowns how to program. as fate would have it, he is busy writing software which prevents aircraft collisions. He asks you to complete this task for him. Can you write the program?
+
+input
+
+The first line in the input describes whether the program should encrypt or decrypt. Then a line with one positive integer  follows. Finally, lines follow, each of which consists of some number of words, which are separated by spaces. Words consist entirely of english letters, full stops and commas.
+
+if the first line is D then the rest of the input should be encrypted, but if it is a then it should be decrypted. you may assume that each vowel letter in the text represents a vowel sound on its own.
+
+output
+
+if the first line of the input is D, then you should output the text in the input after it has been encrypted. otherwise you should output the text in the input after it has been decrypted. you do not need to preserve the formatting of the text.

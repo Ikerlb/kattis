@@ -1,0 +1,6 @@
+3 2
+Alice m
+Bobbie u
+Charlie m
+Alice -> Charlie
+Charlie -> Bobbie
