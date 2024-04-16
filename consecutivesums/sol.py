@@ -1,14 +1,29 @@
+from math import sqrt, floor
 
+n = int(input())
+tcs = [int(input()) for _ in range(n)]
 
+def gauss(i):
+    return (i * (i + 1)) >> 1
+
+# first i such that
+# (n - gauss(i))
+# is divisible
+# by i
 def solve(n):
-    # is n is a consecutive num
-    # sum, then it is of the form
+    i = 2
+    while n >= (g := gauss(i)):
+        if ((n - g) % i) == 0:
+            return i
+        i += 1
 
-    # (a * (a + 1) // 2) - (b * (b + 1) // 2) = n
-    # if we know b then we can calculate a as follows
+def format_solution(n, m):
+    start = gauss(m)
+    offset = (n - start) // m + 1
+    return f'{n} = {" + ".join(map(str, range(offset, offset + m)))}'
 
-    # (a^2 + a) // 2 - (b^2 + b) // 2 = n 
-    # 1/2 * (a^2 + a - b^2 - b) = n
-    # a^2 + a - b^2 - b = n/2
-
-    
+for n in tcs: 
+    if (s := solve(n)) is not None:
+        print(format_solution(n, s))
+    else:
+        print("IMPOSSIBLE")
