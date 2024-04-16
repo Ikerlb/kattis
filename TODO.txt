@@ -1,4 +1,3 @@
-consecutivesum
 ads
 distracted
 congaline
