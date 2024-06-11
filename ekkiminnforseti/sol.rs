@@ -11,6 +11,19 @@ fn process_order(s: String) -> Vec<usize> {
     return res;
 }
 
+/*
+ * smarter brute force:
+ * for each vote, maintain
+ * a sorted set with the
+ * number of votes each
+ * candidate has
+ * whenever we remove 
+ * a candidate, we only
+ * update those whose
+ * first valid vote
+ * is the candidate to remove
+ * */
+
 fn main() -> io::Result<()> {
     let stdin = io::stdin();
     let mut lines = stdin.lock().lines();
@@ -51,32 +64,35 @@ fn main() -> io::Result<()> {
     let mut dqs = HashSet::new();
 
     for _ in 0..(m - 1) {
+        let &(sz, mi) = tree.last().unwrap();
+        if sz > (n >> 1) {
+            break;
+        }
+        
         let (_, mi) = tree.pop_first().unwrap();
         let i = -mi as usize;
         dqs.insert(i);
 
-        if !votes.contains_key(&i) {
-            continue;
-        }
-
-        let all_i_votes = votes.remove(&i).unwrap();
-        for mut v in all_i_votes {
-            while let Some(mvv) = v.pop() {
-                if dqs.contains(&mvv) {
-                    continue;
-                } else {
-                    let prev_size = votes[&mvv].len();
-                    let mmvv = -(mvv as isize);
-                    tree.remove(&(prev_size, mmvv));
-                    votes.entry(mvv).and_modify(|e| e.push(v));
-                    tree.insert((prev_size + 1, mmvv));
-                    break;
+        if let Some(all_i_votes) = votes.remove(&i) {
+            for mut v in all_i_votes {
+                while let Some(mvv) = v.pop() {
+                    if dqs.contains(&mvv) {
+                        continue;
+                    } else {
+                        let prev_size = votes[&mvv].len();
+                        let mmvv = -(mvv as isize);
+                        tree.remove(&(prev_size, mmvv));
+                        votes.entry(mvv).and_modify(|e| e.push(v));
+                        tree.insert((prev_size + 1, mmvv));
+                        break;
+                    }
                 }
             }
         }
+
     }
 
-    let (_, mi) = tree.pop_first().unwrap();
+    let (_, mi) = tree.pop_last().unwrap();
     let i = -mi as usize;
 
     println!("{}", candidates[i]);

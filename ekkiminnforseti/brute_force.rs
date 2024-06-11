@@ -26,30 +26,6 @@ fn count(votes: &mut Vec<Vec<usize>>, dqs: &Vec<bool>) -> Vec<usize> {
     return counts;
 }
 
-/*fn max_min_idx(counts: &Vec<usize>, dqs: &HashSet<usize>) -> (usize, usize) {
-    let mut mx = 0;
-    let mut mn = 0;
-    let mut started = false;
-    for (i, &c) in counts
-        .iter()
-        .enumerate()
-        .filter(|&(i, _)| !dqs.contains(&(i + 1)))
-    {
-        if !started {
-            mx = i;
-            mn = i;
-            started = true;
-        }
-        if counts[mn] > c || i > mn {
-            mn = i;
-        }
-        if counts[mx] < c || i < mx {
-            mx = i;
-        }
-    }
-    return (mn + 1, mx + 1);
-}*/
-
 fn min_candidate(counts: &Vec<usize>, dqs: &Vec<bool>) -> usize {
     return (0..counts.len())
         .filter(|&i| !dqs[i])
@@ -64,6 +40,11 @@ fn max_candidate(counts: &Vec<usize>, dqs: &Vec<bool>) -> usize {
         .unwrap();
 }
 
+/*
+ * each voting round (m)
+ * we traverse all the votes (n)
+ * O(n * m)
+ * */
 fn main() -> io::Result<()> {
     let stdin = io::stdin();
     let mut lines = stdin.lock().lines();
