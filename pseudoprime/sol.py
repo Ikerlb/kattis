@@ -1,35 +1,55 @@
-def sieve(upto):
-    primes = []
-    not_primes = set()
-    for i in range(2, upto + 1):
-        if i not in not_primes:
-            primes.append(i)
-        for j in range(i * i, upto + 1, i):
-            not_primes.add(j)
-    return primes
+import fileinput
 
 def is_prime(n):
-    i = 0
-    while i < len(primes) and primes[i] < n:
-        if n % primes[i] == 0:
+    # Our list of deterministic bases
+    bases = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
+    
+    # Handle simple cases and check if n is one of our bases
+    if n < 2:
+        return False
+    if n in bases:
+        return True
+    if any(n % b == 0 for b in bases): # Optimization for small factors
+        return False
+
+    # The single-base test function (our witness checker)
+    def is_composite_witness(a, n):
+        s = 0
+        d = n - 1
+        while d % 2 == 0:
+            d >>= 1
+            s += 1
+        
+        x = pow(a, d, n)
+        if x == 1 or x == n - 1:
             return False
-        i += 1
+
+        for _ in range(s - 1):
+            x = pow(x, 2, n)
+            if x == 1:
+                return True
+            if x == n - 1:
+                return False
+        
+        return True
+
+    # Run the test for all our deterministic bases
+    for a in bases:
+        if is_composite_witness(a, n):
+            return False
+            
     return True
 
-def _pow(n, k, mod):
-    if k == 0:
-        return 1
-    half = _pow(n, k >> 1, mod) % mod
-    if k & 1 == 0:
-        return half * half % mod
-    return (((half * half) % mod) * n) % mod
+# The single-base test function (our witness checker)
+def is_pseudoprime(p, a):
+    res = pow(a, p, p)
+    return res == a
 
-primes = sieve(32000)
-while True:
-    p, a = map(int, input().split(" "))
+for line in fileinput.input():
+    p, a = map(int, line[:-1].split(" "))
     if p == a == 0:
         break
-    if not is_prime(p) and _pow(a, p, p) == a: 
+    if is_pseudoprime(p, a) and not is_prime(p):
         print("yes")
     else:
         print("no")
