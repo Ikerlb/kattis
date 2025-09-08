@@ -1,3 +1,5 @@
+import fileinput
+
 def sieve(upto):
     primes = []
     not_primes = set()
@@ -22,9 +24,23 @@ def phi(n):
     return res
 
 
+# note, I went back to this 
+# and had no clue what this 
+# did.
+# so i'll leave some notes for
+# future iker
+# the reason why we have a prefix sum
+# is that if N is 1
+# the only fractions we have are 
 
 # 0/1
 # 1/1
+
+# if we have N=2, we have all the fractions 
+# for N - 1 and also the number of i < N
+# such that i and N are relative primes (GCD(i, N) == 1)
+# which is coincidentally what euler's phi
+# functions does
 
 # 1/2
 
@@ -48,8 +64,8 @@ upto = 10000
 for i in range(1, upto + 1): 
     ps.append(ps[-1] + phi(i))    
 
-
-n = int(input())
-for _ in range(n):
-    i, n = map(int, input().split(" "))
+inpt = fileinput.input()
+n = int(next(inpt)[:-1])
+for _, line in zip(range(n), inpt):
+    i, n = map(int, line[:-1].split(" "))
     print(i, ps[n])
