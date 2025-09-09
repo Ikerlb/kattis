@@ -1,31 +1,36 @@
 from sys import stdin
 from math import isqrt
+from collections import Counter
+import fileinput
 
-#def divisors(n):
-#    for i in range(2, isqrt(n) + 1):
-#        d, m = divmod(n, i)
-#        if m == 0 and :
-#            yield d, i
+def pth_order(n, p):
+    i = 0
+    while n % p == 0:
+        i += 1
+        n //= p 
+    return i
 
-def reduce(c):
-    
-
-def solve(n):
+def solve(n): 
     if n < 10:
-        return f"1{n}"
-    res = []
-    while n != 1:
-        for i in range(2, 10):
-            if n % i == 0:
-                res.append(i)
-                n //= i
-        else: # couldn't divide by any digits, it must be impossible
-            break
-    
-    return "".join(map(lambda x: str(x), reversed(res)))
+        return [1, n]
+    res = [] 
+    for i in reversed(range(2, 10)):
+        d = pth_order(n, i)
+        #print(f"{n=}, {i=}, {d=}")
+        if d > 0:
+            res.extend([i] * d)
+            n //= (i ** d)
+    if n != 1:
+        return None
+    return sorted(res)
 
-#for line in stdin:
-#    if line == "-1":
-#        continue
-#    n = int(line[:-1])
+for line in fileinput.input():
+    n = int(line[:-1])
+    if n == -1:
+        break 
+    res = solve(n) 
+    if res is None:
+        print("There is no such number.")
+    else:
+        print("".join(map(str, res)))
 
